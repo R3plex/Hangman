@@ -1,6 +1,6 @@
 :root {
   --bg-color: rgb(230, 230, 136);
-  --menu-color: rgb(228, 228, 90);
+  --menu-color: beige;
   --overlay-color: beige;
   --btncolor: rgb(184, 184, 146);
 }
@@ -11,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
 }
 .menu {
   width: 100%;
@@ -21,6 +22,7 @@ body {
   align-items: center;
   height: 3rem;
   margin: 0 0;
+  margin-bottom: 2rem;
 }
 .hangman-container {
   background-color: var(--overlay-color);
