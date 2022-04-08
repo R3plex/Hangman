@@ -41,7 +41,7 @@ resetBtn.addEventListener("click", reset);
 
 submit.addEventListener("click", () => {
   reset();
-  motCache = text.value.trim();
+  motCache = text.value.trim().toLocaleLowerCase();
   for (i of motCache) {
     if (i !== " ") {
       lettreMotCache.push(i);
@@ -88,11 +88,10 @@ function isLetterIn(letter) {
     if (motCache.indexOf(letter) > -1) {
       alphabet[`letter-${letter}`].classList.add("clicked");
       lettreTrouve.push(letter);
-      if (JSON.stringify(lettreTrouve) == JSON.stringify(lettreMotCache)) {
-        wordDisplay.textContent = `Bravo tu a bien trouve le mot "${motCache}"`;
+      afficheMot();
+      if (wordDisplay.textContent.indexOf("_") == -1) {
+        wordDisplay.textContent = `Well done the word was "${motCache}"`;
         pasFini = false;
-      } else {
-        afficheMot();
       }
     } else {
       alphabet[`letter-${letter}`].classList.add("clicked");
