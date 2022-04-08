@@ -1,0 +1,15 @@
+<svg width="300" height="351" viewBox="0 0 300 351" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="hangman">
+    <line id="sol" y1="347" x2="300" y2="347" stroke="#5F4833" stroke-width="6"/>
+    <line id="poto" x1="73" y1="350.044" x2="73" y2="0.0440674" stroke="#5F4833" stroke-width="6"/>
+    <line id="bras" x1="70" y1="3" x2="249" y2="3" stroke="#5F4833" stroke-width="6"/>
+    <line id="diago" x1="130.024" y1="2.21463" x2="72.0237" y2="55.2146" stroke="#5F4833" stroke-width="6"/>
+    <line id="corde" x1="252" x2="252" y2="66" stroke="#5F4833" stroke-width="6"/>
+    <path id="Head" d="M272 84.5C272 94.0709 263.369 102 252.5 102C241.631 102 233 94.0709 233 84.5C233 74.9291 241.631 67 252.5 67C263.369 67 272 74.9291 272 84.5Z" stroke="black" stroke-width="2"/>
+    <line id="Body" x1="252.5" y1="102.993" x2="252.007" y2="178.007" stroke="black" stroke-width="2"/>
+    <line id="Arm one" x1="252.485" y1="126.143" x2="286.772" y2="105.541" stroke="black" stroke-width="2"/>
+    <line id="Arm two" x1="252.485" y1="128.857" x2="218.198" y2="108.256" stroke="black" stroke-width="2"/>
+    <line id="Leg one" x1="251.778" y1="177.372" x2="272.778" y2="203.372" stroke="black" stroke-width="2"/>
+    <line id="Leg two" x1="251.768" y1="177.64" x2="231.768" y2="201.64" stroke="black" stroke-width="2"/>
+</g>
+</svg>
