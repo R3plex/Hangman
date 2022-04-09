@@ -12,9 +12,9 @@ const legTwo = document.querySelector("#legTwo");
 
 sol.classList.add("show");
 poto.classList.add("show");
-bras.classList.add("show");
-diago.classList.add("show");
-corde.classList.add("show");
+// bras.classList.add("show");
+// diago.classList.add("show");
+// corde.classList.add("show");
 
 const submit = document.querySelector(".Submit");
 const text = document.querySelector("input");
@@ -22,7 +22,17 @@ let hiddenWord;
 const wordDisplay = document.querySelector(".wordDisplay");
 let lettersFound = [];
 let NumberOfBad = 0;
-const stickMan = [Head, Body, armOne, armTwo, legOne, legTwo];
+const stickMan = [
+  bras,
+  diago,
+  corde,
+  Head,
+  Body,
+  armOne,
+  armTwo,
+  legOne,
+  legTwo,
+];
 let lettersInWord = [];
 const resetBtn = document.querySelector(".reset");
 let notDone = true;
@@ -118,7 +128,7 @@ function isLetterIn(letter) {
       alphabet[`letter-${letter}`].classList.add("clicked");
       NumberOfBad++;
       drawHangman();
-      if (NumberOfBad === 6) {
+      if (NumberOfBad === 9) {
         wordDisplay.textContent = `You lost, the word was "${hiddenWord}"`;
         notDone = false;
       }
