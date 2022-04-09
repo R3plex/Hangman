@@ -16,6 +16,18 @@ bras.classList.add("show");
 diago.classList.add("show");
 corde.classList.add("show");
 
+const submit = document.querySelector(".Submit");
+const text = document.querySelector("input");
+let hiddenWord;
+const wordDisplay = document.querySelector(".wordDisplay");
+let lettersFound = [];
+let NumberOfBad = 0;
+const stickMan = [Head, Body, armOne, armTwo, legOne, legTwo];
+let lettersInWord = [];
+const resetBtn = document.querySelector(".reset");
+let notDone = true;
+const random = document.querySelector(".random");
+
 const alphabet = Object.fromEntries(
   [...document.querySelectorAll(".letter")].map((elem) => [elem.id, elem])
 );
@@ -26,80 +38,89 @@ for (let key in alphabet) {
   });
 }
 
-const submit = document.querySelector(".Submit");
-const text = document.querySelector("input");
-let motCache;
-const wordDisplay = document.querySelector(".wordDisplay");
-let lettreTrouve = [];
-let NumberOfBad = 0;
-const stickMan = [Head, Body, armOne, armTwo, legOne, legTwo];
-let lettreMotCache = [];
-const resetBtn = document.querySelector(".reset");
-let pasFini = true;
-
-resetBtn.addEventListener("click", reset);
-
-submit.addEventListener("click", () => {
-  reset();
-  motCache = text.value.trim().toLocaleLowerCase();
-  for (i of motCache) {
-    if (i !== " ") {
-      lettreMotCache.push(i);
-    }
-  }
-  text.value = "";
-  lettreTrouve = [];
-  afficheMot();
-});
-
 function reset() {
   wordDisplay.textContent = "Enter a word";
-  lettreMotCache = [];
+  lettersInWord = [];
   NumberOfBad = 0;
-  lettreTrouve = [];
+  lettersFound = [];
   for (let key in alphabet) {
     alphabet[key].classList.remove("clicked");
   }
   for (let i = 0; i < stickMan.length; i++) {
     stickMan[i].classList.remove("show");
   }
-  pasFini = true;
+  notDone = true;
 }
 
-function afficheHangman() {
-  for (let i = 0; i < NumberOfBad; i++) {
-    stickMan[i].classList.add("show");
-  }
-}
+resetBtn.addEventListener("click", reset);
 
-function afficheMot() {
+function drawWord() {
   wordDisplay.textContent = "";
-  for (i of motCache) {
+  for (i of hiddenWord) {
     i === " "
       ? (wordDisplay.textContent += " - ")
-      : lettreTrouve.indexOf(i) > -1
+      : lettersFound.indexOf(i) > -1
       ? (wordDisplay.textContent += i)
       : (wordDisplay.textContent += " _ ");
   }
 }
 
+function randomWord() {
+  reset();
+  fetch("/Hangman/wordlist.txt")
+    .then((res) => res.text())
+    .then((text) => {
+      const words = text.split("\n");
+      hiddenWord = words[Math.floor(Math.random() * 1000)];
+      for (i of hiddenWord) {
+        if (i !== " ") {
+          lettersInWord.push(i);
+        }
+      }
+      text.value = "";
+      lettersFound = [];
+      drawWord();
+    });
+}
+
+random.addEventListener("click", randomWord);
+
+submit.addEventListener("click", () => {
+  reset();
+  hiddenWord = text.value.trim().toLocaleLowerCase();
+  for (i of hiddenWord) {
+    if (i !== " ") {
+      lettersInWord.push(i);
+    }
+  }
+  text.value = "";
+  lettersFound = [];
+  drawWord();
+});
+
+function drawHangman() {
+  for (let i = 0; i < NumberOfBad; i++) {
+    stickMan[i].classList.add("show");
+  }
+}
+
 function isLetterIn(letter) {
-  if (pasFini) {
-    if (motCache.indexOf(letter) > -1) {
+  if (notDone) {
+    if (hiddenWord.indexOf(letter) > -1) {
       alphabet[`letter-${letter}`].classList.add("clicked");
-      lettreTrouve.push(letter);
-      afficheMot();
+      lettersFound.push(letter);
+      drawWord();
       if (wordDisplay.textContent.indexOf("_") == -1) {
-        wordDisplay.textContent = `Well done the word was "${motCache}"`;
-        pasFini = false;
+        wordDisplay.textContent = `Well done the word was "${hiddenWord}"`;
+        notDone = false;
       }
     } else {
       alphabet[`letter-${letter}`].classList.add("clicked");
       NumberOfBad++;
-      afficheHangman();
+      drawHangman();
       if (NumberOfBad === 6) {
-        wordDisplay.textContent = `You lost, the word was "${motCache}"`;
-        pasFini = false;
+        wordDisplay.textContent = `You lost, the word was "${hiddenWord}"`;
+        notDone = false;
       }
     }
   }
